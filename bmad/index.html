@@ -1,0 +1,368 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>BMAD Desenhado</title>
+  <meta name="description" content="O método BMAD explicado em desenho: cada agente, o que faz e como eles se passam o trabalho.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&family=Patrick+Hand&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --paper: #fbf8f1; --ink: #2b2a27; --soft: #6f6a60; --grid: #ebe4d4; --card: #fffdf8;
+      --mary: #e8590c; --john: #1971c2; --sally: #c2255c; --winston: #2f9e44; --sofia: #7048e8; --amelia: #e67700; --voce: #495057;
+      --hl: #ffe066;
+      color-scheme: light;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --paper: #1c1b19; --ink: #ece7dc; --soft: #a59f92; --grid: #2a2825; --card: #232220;
+        --mary: #ff8a4c; --john: #5eaaf0; --sally: #f06595; --winston: #69db7c; --sofia: #a48bff; --amelia: #ffb84d; --voce: #ced4da;
+        --hl: #6b5a00;
+        color-scheme: dark;
+      }
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0; color: var(--ink); font-family: "Patrick Hand", "Comic Sans MS", cursive; font-size: 19px; line-height: 1.5;
+      background-color: var(--paper);
+      background-image: linear-gradient(var(--grid) 1px, transparent 1px), linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+      background-size: 28px 28px;
+    }
+    .w { max-width: 1060px; margin: 0 auto; padding: 40px 16px 80px; }
+    h1, h2, h3 { font-family: "Caveat", cursive; font-weight: 700; line-height: 1.05; margin: 0; }
+    h1 { font-size: clamp(2.8rem, 8vw, 4.6rem); }
+    h2 { font-size: clamp(2.2rem, 5vw, 3rem); margin: 72px 0 6px; }
+    h3 { font-size: 1.9rem; }
+    p { margin: 0 0 10px; }
+    .sub { color: var(--soft); }
+    .marca { background: linear-gradient(transparent 55%, var(--hl) 55%, var(--hl) 90%, transparent 90%); padding: 0 4px; }
+    code { font-family: ui-monospace, Consolas, monospace; font-size: .8em; background: var(--grid); padding: 1px 6px; border-radius: 4px; }
+    .alerta { display: inline-block; margin-top: 14px; border: 2px dashed var(--soft); border-radius: 12px 18px 10px 16px; padding: 6px 14px; font-size: .95rem; color: var(--soft); }
+
+    .mapa { margin-top: 28px; background: var(--card); border: 2.5px solid var(--ink); border-radius: 18px 26px 16px 24px / 24px 16px 26px 18px; padding: 8px; box-shadow: 5px 6px 0 var(--grid); }
+    .mapa svg { display: block; width: 100%; height: auto; }
+    .mapa-dica { text-align: center; color: var(--soft); font-size: .95rem; margin-top: 6px; }
+
+    .passos { list-style: none; padding: 0; margin: 20px 0 0; display: grid; gap: 18px; }
+    .passo { display: grid; grid-template-columns: 64px 1fr; gap: 14px; align-items: start; }
+    .num { width: 58px; height: 58px; border: 2.5px solid var(--ink); border-radius: 50% 46% 52% 48%; display: grid; place-items: center; font-family: Caveat, cursive; font-size: 2rem; font-weight: 700; background: var(--card); }
+    .passo-corpo { background: var(--card); border: 2px solid var(--ink); border-radius: 14px 20px 12px 18px; padding: 12px 16px; }
+    .passo-corpo h3 { font-size: 1.7rem; margin-bottom: 4px; }
+    .quem { display: inline-block; font-size: .9rem; border-radius: 99px; padding: 0 10px; color: #fff; margin: 0 4px 6px 0; }
+
+    .agentes { display: grid; gap: 22px; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); margin-top: 20px; }
+    .ag { background: var(--card); border: 2.5px solid var(--c); border-radius: 16px 24px 14px 22px / 22px 14px 24px 16px; padding: 16px 18px; position: relative; }
+    .ag::before { content: ""; position: absolute; inset: 6px -6px -6px 6px; border: 2px solid var(--c); border-radius: inherit; opacity: .25; z-index: -1; }
+    .ag-topo { display: flex; gap: 12px; align-items: center; margin-bottom: 8px; }
+    .ag-topo svg { flex: none; }
+    .ag h3 { color: var(--c); font-size: 2rem; }
+    .ag .papel { color: var(--soft); font-size: .95rem; }
+    .ag dl { margin: 10px 0 0; }
+    .ag dt { font-family: Caveat, cursive; font-weight: 700; font-size: 1.35rem; color: var(--c); margin-top: 8px; }
+    .ag dd { margin: 0; }
+    .codigos { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 4px; }
+    .codigos span { border: 1.5px solid var(--c); border-radius: 8px 10px 7px 9px; padding: 0 7px; font-size: .9rem; }
+    .codigos b { color: var(--c); }
+
+    .tamanhos { display: grid; gap: 18px; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); margin-top: 20px; }
+    .tam { background: var(--card); border: 2px solid var(--ink); border-radius: 14px 20px 12px 18px; padding: 14px 16px; }
+    .tam h3 { font-size: 1.7rem; }
+
+    .ferr { display: grid; gap: 14px; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); margin-top: 20px; }
+    .fe { border-left: 4px solid var(--ink); padding: 2px 0 2px 12px; }
+    .fe b { font-family: Caveat, cursive; font-size: 1.45rem; display: block; }
+    .fe span { color: var(--soft); font-size: .95rem; }
+
+    .comecar { background: var(--card); border: 2.5px dashed var(--ink); border-radius: 18px; padding: 18px 20px; margin-top: 20px; }
+    .comecar ol { margin: 0; padding-left: 22px; }
+    .comecar li { margin-bottom: 6px; }
+    .rodape { margin-top: 64px; color: var(--soft); font-size: .9rem; text-align: center; }
+  </style>
+</head>
+<body>
+<div class="w">
+
+  <p class="sub">Um guia desenhado · BMAD Method v7</p>
+  <h1>O time BMAD, <span class="marca">em desenho</span></h1>
+  <p style="max-width:720px;margin-top:12px">O BMAD adiciona ao Claude Code um <b>time de agentes</b>, cada um com uma especialidade, como numa empresa de software de verdade. A ideia entra de um lado, passa de mão em mão e sai do outro como código pronto e revisado. <b>Você toma as decisões</b> em cada etapa.</p>
+  <span class="alerta">✎ A versão 7 está em "preview alpha": nomes e comandos ainda podem mudar.</span>
+
+  <h2>O mapa do time</h2>
+  <p class="sub">Quem passa o quê para quem. As setas mostram o documento que cada agente entrega ao próximo.</p>
+
+  <div class="mapa">
+    <svg viewBox="0 0 1000 700" role="img" aria-labelledby="mapa-t mapa-d">
+      <title id="mapa-t">Mapa dos agentes do BMAD</title>
+      <desc id="mapa-d">Você leva a ideia à Mary, a analista, que entrega um resumo do produto ao John, o gerente de produto. John escreve o PRD e o passa para Sally (UX), Winston (arquitetura) e Sofia (dona do produto). Sally e Winston também entregam seus documentos a Sofia, que quebra o trabalho em tickets para Amelia, a desenvolvedora. Amelia constrói, revisa e devolve a retrospectiva para Sofia replanejar. Mudanças pequenas podem ir direto de você para Amelia. O guia bmad fica acima de todos, indicando o próximo passo.</desc>
+      <defs>
+        <filter id="rabisco" x="-5%" y="-5%" width="110%" height="110%">
+          <feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="2" seed="7"/>
+          <feDisplacementMap in="SourceGraphic" scale="3.2"/>
+        </filter>
+        <marker id="ponta" viewBox="0 0 12 12" refX="10" refY="6" markerWidth="11" markerHeight="11" orient="auto-start-reverse">
+          <path d="M1 1 L11 6 L1 11" fill="none" stroke="var(--ink)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </marker>
+        <g id="rosto">
+          <circle r="36" fill="var(--card)" stroke-width="3"/>
+          <circle cx="-12" cy="-4" r="3.2" fill="var(--ink)" stroke="none"/>
+          <circle cx="12" cy="-4" r="3.2" fill="var(--ink)" stroke="none"/>
+          <path d="M-12 12 Q0 22 12 12" fill="none" stroke="var(--ink)" stroke-width="2.6" stroke-linecap="round"/>
+        </g>
+      </defs>
+
+      <!-- faixas das fases -->
+      <g font-family="Caveat, cursive" font-size="26" font-weight="700" fill="var(--soft)" text-anchor="middle">
+        <text x="150" y="150">1. analisar</text>
+        <text x="390" y="150">2. planejar</text>
+        <text x="640" y="150">3. organizar</text>
+        <text x="880" y="150">4. construir</text>
+      </g>
+      <g filter="url(#rabisco)" stroke="var(--grid)" stroke-width="3" stroke-dasharray="2 10" stroke-linecap="round">
+        <line x1="270" y1="130" x2="270" y2="620"/>
+        <line x1="515" y1="130" x2="515" y2="620"/>
+        <line x1="765" y1="130" x2="765" y2="620"/>
+      </g>
+
+      <!-- guia bmad -->
+      <g filter="url(#rabisco)">
+        <rect x="330" y="20" width="340" height="78" rx="20" fill="var(--hl)" fill-opacity=".55" stroke="var(--ink)" stroke-width="3"/>
+        <path d="M500 98 L500 124" stroke="var(--ink)" stroke-width="2.5" stroke-dasharray="4 6"/>
+      </g>
+      <text x="500" y="54" text-anchor="middle" font-family="Caveat, cursive" font-size="34" font-weight="700" fill="var(--ink)">🧭 bmad, o guia</text>
+      <text x="500" y="82" text-anchor="middle" font-family="Patrick Hand, cursive" font-size="17" fill="var(--ink)">sempre diz qual é o próximo passo</text>
+
+      <!-- setas -->
+      <g filter="url(#rabisco)" fill="none" stroke="var(--ink)" stroke-width="2.6" stroke-linecap="round" marker-end="url(#ponta)">
+        <path d="M92 560 C 96 510, 108 470, 122 436"/>                 <!-- você -> mary -->
+        <path d="M195 290 C 250 250, 300 225, 345 222"/>                <!-- mary -> john -->
+        <path d="M390 268 C 390 330, 390 370, 390 425"/>                <!-- john -> sally -->
+        <path d="M436 215 C 500 205, 560 205, 594 212"/>                <!-- john -> winston -->
+        <path d="M430 255 C 500 320, 560 400, 600 440"/>                <!-- john -> sofia -->
+        <path d="M436 478 C 500 485, 560 485, 594 478"/>                <!-- sally -> sofia -->
+        <path d="M434 445 C 490 380, 560 290, 600 255"/>                <!-- sally -> winston -->
+        <path d="M640 268 C 640 330, 640 370, 640 425"/>                <!-- winston -> sofia -->
+        <path d="M686 450 C 750 420, 800 390, 836 365"/>                <!-- sofia -> amelia -->
+        <path d="M905 444 C 915 525, 780 560, 680 515" stroke-dasharray="7 7" stroke="var(--amelia)"/>  <!-- amelia -> sofia (retro) -->
+        <path d="M130 600 C 400 660, 760 640, 858 446" stroke-dasharray="3 9" stroke="var(--soft)"/> <!-- você -> amelia atalho -->
+      </g>
+
+      <!-- rótulos das setas -->
+      <g font-family="Patrick Hand, cursive" font-size="16" fill="var(--ink)">
+        <text x="40" y="455">sua ideia</text>
+        <text x="215" y="228">resumo do produto</text>
+        <text x="215" y="246">+ pesquisas</text>
+        <text x="400" y="352">PRD</text>
+        <text x="482" y="196">PRD</text>
+        <text x="460" y="300" transform="rotate(38 460 300)">PRD</text>
+        <text x="470" y="504">DESIGN.md</text>
+        <text x="520" y="330" transform="rotate(-40 520 330)">telas e fluxos</text>
+        <text x="650" y="352">arquitetura</text>
+        <text x="716" y="385" transform="rotate(-28 716 385)">tickets</text>
+        <text x="820" y="560">retrospectiva:</text>
+        <text x="820" y="578">o que mudar?</text>
+        <text x="380" y="668" fill="var(--soft)">mudança pequena? vá direto para a construção</text>
+      </g>
+
+      <!-- personagens -->
+      <g filter="url(#rabisco)">
+        <use href="#rosto" x="150" y="330" stroke="var(--mary)"/>
+        <use href="#rosto" x="390" y="225" stroke="var(--john)"/>
+        <use href="#rosto" x="390" y="470" stroke="var(--sally)"/>
+        <use href="#rosto" x="640" y="225" stroke="var(--winston)"/>
+        <use href="#rosto" x="640" y="470" stroke="var(--sofia)"/>
+        <use href="#rosto" x="880" y="340" stroke="var(--amelia)"/>
+        <use href="#rosto" x="95" y="600" stroke="var(--voce)"/>
+        <!-- cabelos e acessórios -->
+        <path d="M118 318 Q150 270 182 318" fill="none" stroke="var(--mary)" stroke-width="5" stroke-linecap="round"/>
+        <path d="M360 205 Q390 178 420 205" fill="none" stroke="var(--john)" stroke-width="4" stroke-linecap="round"/>
+        <path d="M356 460 Q360 420 390 432 Q420 420 424 460" fill="none" stroke="var(--sally)" stroke-width="5" stroke-linecap="round"/>
+        <path d="M604 205 L676 205 L668 190 L612 190 Z" fill="var(--winston)" fill-opacity=".35" stroke="var(--winston)" stroke-width="3" stroke-linejoin="round"/>
+        <path d="M606 458 Q640 418 674 458" fill="none" stroke="var(--sofia)" stroke-width="5" stroke-linecap="round"/>
+        <rect x="862" y="320" width="14" height="10" rx="3" fill="none" stroke="var(--amelia)" stroke-width="2.5"/>
+        <rect x="884" y="320" width="14" height="10" rx="3" fill="none" stroke="var(--amelia)" stroke-width="2.5"/>
+      </g>
+
+      <!-- nomes -->
+      <g font-family="Caveat, cursive" font-weight="700" text-anchor="middle" font-size="30">
+        <text x="150" y="400" fill="var(--mary)">Mary</text>
+        <text x="390" y="295" fill="var(--john)">John</text>
+        <text x="390" y="540" fill="var(--sally)">Sally</text>
+        <text x="640" y="295" fill="var(--winston)">Winston</text>
+        <text x="640" y="540" fill="var(--sofia)">Sofia</text>
+        <text x="880" y="410" fill="var(--amelia)">Amelia</text>
+        <text x="175" y="608" fill="var(--voce)" text-anchor="start">Você</text>
+      </g>
+      <g font-family="Patrick Hand, cursive" font-size="16" fill="var(--soft)" text-anchor="middle">
+        <text x="150" y="420">analista</text>
+        <text x="390" y="315">gerente de produto</text>
+        <text x="390" y="560">designer de UX</text>
+        <text x="640" y="315">arquiteto</text>
+        <text x="640" y="560">dona do produto</text>
+        <text x="880" y="430">desenvolvedora</text>
+      </g>
+    </svg>
+  </div>
+  <p class="mapa-dica">Linha tracejada laranja: Amelia devolve a retrospectiva para Sofia replanejar. Linha pontilhada cinza: o atalho para mudanças pequenas.</p>
+
+  <h2>Passo a passo</h2>
+  <p class="sub">O caminho completo, de uma ideia vaga até código pronto. Nem tudo é obrigatório: quanto menor a mudança, mais etapas você pula.</p>
+  <ol class="passos">
+    <li class="passo"><div class="num">1</div><div class="passo-corpo">
+      <h3>Prepare o projeto</h3>
+      <p>Abra o Claude Code numa pasta de projeto, digite <code>/bmad</code> e peça <b>"bmad setup"</b>. Ele cria a pasta <code>_bmad/</code> com as configurações. Os documentos que o time produzir vão para <code>_bmad-output/</code>.</p>
+    </div></li>
+    <li class="passo"><div class="num">2</div><div class="passo-corpo">
+      <span class="quem" style="background:var(--mary)">Mary</span>
+      <h3>Clareie a ideia</h3>
+      <p>Se a ideia ainda está vaga, Mary ajuda: faz brainstorming, pesquisa o mercado e a concorrência, testa a ideia com perguntas difíceis e escreve um <b>resumo do produto</b> (product brief).</p>
+    </div></li>
+    <li class="passo"><div class="num">3</div><div class="passo-corpo">
+      <span class="quem" style="background:var(--john)">John</span>
+      <h3>Defina o produto</h3>
+      <p>Quando várias pessoas precisam concordar sobre o que será construído, John escreve o <b>PRD</b>, o documento de requisitos do produto. Num projeto pessoal e pequeno, dá para pular.</p>
+    </div></li>
+    <li class="passo"><div class="num">4</div><div class="passo-corpo">
+      <span class="quem" style="background:var(--sally)">Sally</span><span class="quem" style="background:var(--winston)">Winston</span>
+      <h3>Desenhe a experiência e a técnica</h3>
+      <p>Sally registra como o produto parece e se comporta (<code>DESIGN.md</code> e <code>EXPERIENCE.md</code>). Winston toma as decisões técnicas que mantêm as partes coerentes entre si: banco de dados, estrutura, padrões.</p>
+    </div></li>
+    <li class="passo"><div class="num">5</div><div class="passo-corpo">
+      <span class="quem" style="background:var(--sofia)">Sofia</span>
+      <h3>Transforme em tarefas</h3>
+      <p>Sofia recebe tudo e escreve os <b>requisitos</b> do trabalho: o que deve ser verdade no final, o que não pode mudar e o que fica de fora. Depois fatia em <b>épicos</b> e <b>histórias</b>, na ordem de construção, num arquivo <code>tickets.toml</code>.</p>
+    </div></li>
+    <li class="passo"><div class="num">6</div><div class="passo-corpo">
+      <span class="quem" style="background:var(--amelia)">Amelia</span>
+      <h3>Construa, uma história por vez</h3>
+      <p>Amelia pega uma história, faz o plano, escreve o código, revisa e verifica. É uma sessão por história. Quando as decisões importantes já estão estáveis, <code>bmad-build-auto</code> roda as próximas sozinho, sem esperar você.</p>
+    </div></li>
+    <li class="passo"><div class="num">7</div><div class="passo-corpo">
+      <span class="quem" style="background:var(--amelia)">Amelia</span><span class="quem" style="background:var(--sofia)">Sofia</span>
+      <h3>Revise, teste e aprenda</h3>
+      <p>Revisão de código com vários revisores independentes, testes automáticos e, ao fim de cada épico, uma <b>retrospectiva</b> que compara o resultado com os requisitos. O que se aprendeu volta para Sofia, que replaneja o resto.</p>
+    </div></li>
+  </ol>
+
+  <h2>Conheça cada agente</h2>
+  <p class="sub">Para chamar um agente, digite o nome da skill dele. Depois, use os códigos do menu (ex.: <code>BD</code>) para pedir uma tarefa específica sem sair da conversa.</p>
+
+  <div class="agentes">
+    <article class="ag" style="--c:var(--mary)">
+      <div class="ag-topo">
+        <svg width="62" height="62" viewBox="-40 -48 80 88" aria-hidden="true"><g filter="url(#rabisco)" stroke="var(--mary)"><use href="#rosto"/><path d="M-32 -12 Q0 -60 32 -12" fill="none" stroke-width="5" stroke-linecap="round"/></g></svg>
+        <div><h3>Mary</h3><div class="papel">Analista · <code>bmad-agent-analyst</code></div></div>
+      </div>
+      <p>A curiosa do time. Investiga antes de qualquer um decidir: o problema existe? Quem já resolve? Vale a pena?</p>
+      <dl>
+        <dt>Recebe</dt><dd>Sua ideia, mesmo que vaga.</dd>
+        <dt>Entrega</dt><dd>Resumo do produto, pesquisas e contexto do projeto. Vai para John (ou direto para Sofia, em trabalho menor).</dd>
+        <dt>Menu</dt><dd class="codigos"><span><b>BP</b> brainstorm</span><span><b>MR</b> mercado</span><span><b>DR</b> domínio</span><span><b>TR</b> técnica</span><span><b>TS</b> escolher tecnologia</span><span><b>CR</b> concorrentes</span><span><b>UV</b> voz do usuário</span><span><b>CB</b> resumo do produto</span><span><b>WB</b> PRFAQ</span><span><b>PC</b> contexto do projeto</span></dd>
+      </dl>
+    </article>
+
+    <article class="ag" style="--c:var(--john)">
+      <div class="ag-topo">
+        <svg width="62" height="62" viewBox="-40 -48 80 88" aria-hidden="true"><g filter="url(#rabisco)" stroke="var(--john)"><use href="#rosto"/><path d="M-30 -20 Q0 -47 30 -20" fill="none" stroke-width="4" stroke-linecap="round"/></g></svg>
+        <div><h3>John</h3><div class="papel">Gerente de produto · <code>bmad-agent-pm</code></div></div>
+      </div>
+      <p>O dono do "o quê". Transforma o resumo num documento claro que todos aprovam antes de construir.</p>
+      <dl>
+        <dt>Recebe</dt><dd>O resumo e as pesquisas da Mary.</dd>
+        <dt>Entrega</dt><dd>O <b>PRD</b> para Sally, Winston e Sofia.</dd>
+        <dt>Menu</dt><dd class="codigos"><span><b>PRD</b> criar, atualizar ou validar o PRD</span></dd>
+      </dl>
+    </article>
+
+    <article class="ag" style="--c:var(--sally)">
+      <div class="ag-topo">
+        <svg width="62" height="62" viewBox="-40 -48 80 88" aria-hidden="true"><g filter="url(#rabisco)" stroke="var(--sally)"><use href="#rosto"/><path d="M-34 -10 Q-30 -50 0 -38 Q30 -50 34 -10" fill="none" stroke-width="5" stroke-linecap="round"/></g></svg>
+        <div><h3>Sally</h3><div class="papel">Designer de UX · <code>bmad-agent-ux-designer</code></div></div>
+      </div>
+      <p>Pensa em quem vai usar: como as telas se parecem, o que acontece em cada clique, como a pessoa se sente.</p>
+      <dl>
+        <dt>Recebe</dt><dd>O PRD do John.</dd>
+        <dt>Entrega</dt><dd><code>DESIGN.md</code> e <code>EXPERIENCE.md</code>, para Winston e Sofia.</dd>
+        <dt>Menu</dt><dd class="codigos"><span><b>CU</b> criar o design de UX</span></dd>
+      </dl>
+    </article>
+
+    <article class="ag" style="--c:var(--winston)">
+      <div class="ag-topo">
+        <svg width="62" height="62" viewBox="-40 -48 80 88" aria-hidden="true"><g filter="url(#rabisco)" stroke="var(--winston)"><use href="#rosto"/><path d="M-36 -20 L36 -20 L28 -36 L-28 -36 Z" fill="var(--winston)" fill-opacity=".35" stroke-width="3" stroke-linejoin="round"/></g></svg>
+        <div><h3>Winston</h3><div class="papel">Arquiteto · <code>bmad-agent-architect</code></div></div>
+      </div>
+      <p>O engenheiro-chefe. Decide a "espinha" técnica para que partes construídas separadamente se encaixem.</p>
+      <dl>
+        <dt>Recebe</dt><dd>O PRD do John e o design da Sally.</dd>
+        <dt>Entrega</dt><dd>As decisões de arquitetura, para Sofia e Amelia seguirem.</dd>
+        <dt>Menu</dt><dd class="codigos"><span><b>CA</b> criar a arquitetura</span></dd>
+      </dl>
+    </article>
+
+    <article class="ag" style="--c:var(--sofia)">
+      <div class="ag-topo">
+        <svg width="62" height="62" viewBox="-40 -48 80 88" aria-hidden="true"><g filter="url(#rabisco)" stroke="var(--sofia)"><use href="#rosto"/><path d="M-34 -12 Q0 -56 34 -12" fill="none" stroke-width="5" stroke-linecap="round"/></g></svg>
+        <div><h3>Sofia</h3><div class="papel">Dona do produto · <code>bmad-agent-po</code></div></div>
+      </div>
+      <p>O centro do time. Tudo passa por ela antes de virar código: escreve os requisitos, fatia o trabalho e mantém o quadro em ordem.</p>
+      <dl>
+        <dt>Recebe</dt><dd>PRD, design e arquitetura, ou só uma ideia bem definida sua.</dd>
+        <dt>Entrega</dt><dd>Épicos e histórias em ordem de construção, para a Amelia.</dd>
+        <dt>Menu</dt><dd class="codigos"><span><b>SPEC</b> requisitos</span><span><b>TICKETS</b> fatiar</span><span><b>REFINE</b> detalhar</span><span><b>BOARD</b> quadro</span><span><b>VALIDATE</b> validar</span><span><b>REPLAN</b> replanejar</span><span><b>STORE</b> onde guardar tickets</span></dd>
+      </dl>
+    </article>
+
+    <article class="ag" style="--c:var(--amelia)">
+      <div class="ag-topo">
+        <svg width="62" height="62" viewBox="-40 -48 80 88" aria-hidden="true"><g filter="url(#rabisco)" stroke="var(--amelia)"><use href="#rosto"/><rect x="-20" y="-12" width="15" height="11" rx="3" fill="none" stroke-width="2.5"/><rect x="5" y="-12" width="15" height="11" rx="3" fill="none" stroke-width="2.5"/></g></svg>
+        <div><h3>Amelia</h3><div class="papel">Desenvolvedora · <code>bmad-agent-dev</code></div></div>
+      </div>
+      <p>Quem coloca a mão no código. Constrói uma história por vez, revisa e testa antes de dar como pronta.</p>
+      <dl>
+        <dt>Recebe</dt><dd>Uma história da Sofia, ou uma mudança pequena direto de você.</dd>
+        <dt>Entrega</dt><dd>Código funcionando e revisado. No fim do épico, a retrospectiva volta para Sofia.</dd>
+        <dt>Menu</dt><dd class="codigos"><span><b>BD</b> construir</span><span><b>QA</b> gerar testes</span><span><b>CR</b> revisar código</span><span><b>ER</b> retrospectiva do épico</span></dd>
+      </dl>
+    </article>
+  </div>
+
+  <h2>Que tamanho é o seu trabalho?</h2>
+  <p class="sub">O BMAD usa sempre a mesma unidade, uma sessão de construção. Trabalho maior só adiciona planejamento em volta.</p>
+  <div class="tamanhos">
+    <div class="tam"><h3>✏️ Mudança pequena</h3><p>Uma correção ou um ajuste. Vá direto para <code>bmad-build</code> e descreva a mudança. Se for óbvia, nem precisa do BMAD.</p></div>
+    <div class="tam"><h3>📦 Épico</h3><p>Um resultado que precisa de várias sessões. Entregue a ideia à <b>Sofia</b>: ela escreve os requisitos e fatia em histórias, e a Amelia constrói uma por vez.</p></div>
+    <div class="tam"><h3>🏗️ Projeto</h3><p>Um produto novo ou umas 20 sessões ou mais. Use o time inteiro: Mary, John, Sally e Winston antes, e Sofia divide em vários épicos.</p></div>
+  </div>
+
+  <h2>Ferramentas que qualquer um usa</h2>
+  <p class="sub">Skills de apoio que não pertencem a um agente específico.</p>
+  <div class="ferr">
+    <div class="fe"><b>bmad</b><span>O guia. Pergunte "por onde começo?" e ele lista os próximos passos.</span></div>
+    <div class="fe"><b>bmad-brainstorming</b><span>Sessão guiada para gerar mais de 100 ideias e depois organizá-las.</span></div>
+    <div class="fe"><b>bmad-forge-idea</b><span>Testa uma ideia com perguntas difíceis até ela se firmar ou ser descartada.</span></div>
+    <div class="fe"><b>bmad-deep-recon</b><span>Pesquisa com fontes citadas, na web ou no seu próprio código.</span></div>
+    <div class="fe"><b>bmad-advanced-elicitation</b><span>Pede para o agente repensar a resposta por outro ângulo, como um "pré-mortem".</span></div>
+    <div class="fe"><b>bmad-party-mode</b><span>Coloca vários agentes na mesma conversa, cada um no seu papel, com você mediando.</span></div>
+    <div class="fe"><b>bmad-review</b><span>Revisa código ou documentos por lentes diferentes: casos extremos, estrutura, texto.</span></div>
+    <div class="fe"><b>bmad-walkthrough</b><span>Explica uma mudança bloco por bloco para você revisar.</span></div>
+    <div class="fe"><b>bmad-customize</b><span>Muda o comportamento de um agente descrevendo o que quer em português.</span></div>
+    <div class="fe"><b>bmad-toolsmith</b><span>Ajuda a criar as suas próprias skills e agentes.</span></div>
+  </div>
+
+  <h2>Como começar no seu computador</h2>
+  <div class="comecar">
+    <ol>
+      <li>Os agentes já estão instalados no seu Claude Code, junto com o <code>uv</code>, que o BMAD usa para rodar seus scripts.</li>
+      <li>Abra uma <b>sessão nova numa pasta de projeto</b>: as skills só aparecem em sessões novas.</li>
+      <li>Digite <code>/bmad</code> e peça <b>"bmad setup"</b>. Depois, <b>"bmad status"</b> confere se está tudo certo.</li>
+      <li>Conte sua ideia ao <code>/bmad</code>: ele indica se você começa pela Mary, pela Sofia ou direto pela Amelia.</li>
+    </ol>
+  </div>
+
+  <p class="rodape">Baseado na documentação do BMAD Method (github.com/bmad-code-org/BMAD-METHOD). Desenhado pelo Claude em 21/10/2026.</p>
+</div>
+
+</body>
+</html>
